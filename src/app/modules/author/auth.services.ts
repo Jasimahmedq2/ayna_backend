@@ -6,6 +6,7 @@ import { ILogin, ILoginResponse, IUser } from "./auth.interfaces";
 import { User } from "./auth.models";
 import bcrypt from "bcrypt";
 import nodemailer from "nodemailer";
+import { Book } from "../book/book.model";
 
 const createUser = async (payload: IUser) => {
   payload.password = await bcrypt.hash(
@@ -61,7 +62,35 @@ const LogIn = async (payload: ILogin): Promise<ILoginResponse> => {
   };
 };
 
+const retrieveAuthorsWithBooks = async () => {
+  const authorsWithBooks = await User.aggregate([
+    {
+      $lookup: {
+        from: "books",
+        localField: "_id",
+        foreignField: "author",
+        as: "books",
+      },
+    },
+  ]);
+  return authorsWithBooks;
+};
+const retrieveSingleAuthorWithBooks = async (userId: string) => {
+  const authorsWithBooks = await Book.find({ author: userId }).populate(
+    "author",
+    "name email phone_no"
+  );
+  return authorsWithBooks;
+};
+const retrieveAuthorInfo = async (userId: string): Promise<IUser | null> => {
+  const result = await User.findById(userId);
+  return result;
+};
+
 export const AuthUserServices = {
   createUser,
   LogIn,
+  retrieveAuthorsWithBooks,
+  retrieveSingleAuthorWithBooks,
+  retrieveAuthorInfo,
 };

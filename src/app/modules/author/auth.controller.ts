@@ -30,7 +30,64 @@ const LogIn = async (req: Request, res: Response, next: NextFunction) => {
   }
 };
 
+const retrieveAuthorsWithBooks = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
+  try {
+    const result = await AuthUserServices.retrieveAuthorsWithBooks();
+    sendResponse(res, {
+      statusCode: 200,
+      success: true,
+      message: "successfully retrieve all authors with books",
+      data: result,
+    });
+  } catch (error) {
+    next(error);
+  }
+};
+const retrieveSingleAuthorWithBooks = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
+  const { userId } = req.params;
+  try {
+    const result = await AuthUserServices.retrieveSingleAuthorWithBooks(userId);
+    sendResponse(res, {
+      statusCode: 200,
+      success: true,
+      message: "successfully retrieve all authors with books",
+      data: result,
+    });
+  } catch (error) {
+    next(error);
+  }
+};
+const retrieveAuthorInfo = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
+  const { userId } = (req as any).user;
+  try {
+    const result = await AuthUserServices.retrieveAuthorInfo(userId);
+    sendResponse(res, {
+      statusCode: 200,
+      success: true,
+      message: "successfully retrieve all authors with books",
+      data: result,
+    });
+  } catch (error) {
+    next(error);
+  }
+};
+
 export const AuthUserControllers = {
   createUser,
   LogIn,
+  retrieveAuthorsWithBooks,
+  retrieveSingleAuthorWithBooks,
+  retrieveAuthorInfo,
 };
