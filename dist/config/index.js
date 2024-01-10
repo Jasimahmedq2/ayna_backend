@@ -17,6 +17,4 @@ exports.default = {
         verify_secret: process.env.VERIFY_SECRET,
         verify_email_expire: process.env.VERIFY_EMAIL_EXPIRE,
     },
-    my_email: process.env.MY_EMAIL,
-    my_password: process.env.MY_PASSWORD,
 };
