@@ -11,3 +11,6 @@
 - npm run dev
 
 - ### To check the protected route after login you will get an access token. you have to set the access token in the headers -> authorization = 'token'
+
+ ![authorization](https://i.ibb.co/v3cNx7g/login.png)
+ ![login](https://i.ibb.co/TPJ0Gy2/authorization.png)
